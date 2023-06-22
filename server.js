@@ -3,6 +3,8 @@ const app = require('./app');
 
 const { DB_HOST, PORT } = process.env;
 
+mongoose.set('strictQuery', false);
+
 mongoose
   .connect(DB_HOST)
   .then(() => {
