@@ -2,14 +2,6 @@ const { Schema, model } = require('mongoose');
 const Joi = require('joi');
 const { handleMongooseError, HttpError } = require('../helpers');
 
-//   title: 'max250 | required',
-//   start: 'format "09:00" | required',
-//   end: 'format "09:30" | end > start | required ',
-//   priority: ' low medium high  | required',
-//   date: 'format YYYY-MM-DD | required',
-//   category: ' todo in-progres done | require',
-//   owner: 'userId'
-
 const timeRegExp = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/; // HH:MM 24-hour with leading 0
 const dateRegExp = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/; // exact match for yyyy-mm-dd
 
@@ -65,13 +57,6 @@ taskShema.post('save', handleMongooseError);
 const Task = model('task', taskShema);
 
 // ------------------------------JOI---------------------------------
-//   title: 'max250 | required',
-//   start: 'format "09:00" | required',
-//   end: 'format "09:30" | end > start | required ',
-//   priority: ' low medium high  | required',
-//   date: 'format YYYY-MM-DD | required',
-//   category: ' todo in-progres done | require',
-//   owner: 'userId'
 
 const addShema = Joi.object({
   title: Joi.string().max(250).required().messages({
@@ -114,3 +99,11 @@ module.exports = {
   Task,
   shemas,
 };
+
+//   title: 'max250 | required',
+//   start: 'format "09:00" | required',
+//   end: 'format "09:30" | end > start | required ',
+//   priority: ' low medium high  | required',
+//   date: 'format YYYY-MM-DD | required',
+//   category: ' todo in-progres done | require',
+//   owner: 'userId'
