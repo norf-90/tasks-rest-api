@@ -1,11 +1,9 @@
 const { ctrlWrapper } = require('../../helpers');
 const { HttpError, sendEmail } = require('../../helpers');
-const { User, schemas } = require('../../models/authSchema');
+const { User } = require('../../models/authSchema');
 const APP_HOST = process.env.APP_HOST;
 
 const verify = async (req, res) => {
-    const { error } = schemas.emailSchema.validate(req.body);
-    if (error) throw HttpError(401, error.message);
     const { email } = req.body;
     const findUser = await User.findOne({ email });
     if (!findUser) throw HttpError(400, 'missing required field email');
@@ -22,7 +20,7 @@ const verify = async (req, res) => {
                     Thank you for signing up! To complete your registration, please click the button below to verify your email address.
                   </p>
                   <div style="text-align: center; margin-top: 30px;">
-                    <a href="${APP_HOST}/api/users/verify/${findUser.verificationToken}"
+                    <a href="${APP_HOST}/api/auth/verify/${findUser.verificationToken}"
                       style="display: inline-block; padding: 12px 24px; background-color: #4caf50; color: white; text-decoration: none; border-radius: 5px;">
                       Verify Email
                     </a>

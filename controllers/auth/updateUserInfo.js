@@ -16,7 +16,7 @@ const updateUserInfo = async (req, res) => {
 		user.password = hashPassword;
 	}
 	await user.save();
-	user.token = "";
+	await User.findByIdAndUpdate(_id, {token: null});
 	res.json({ message: "Success changed, sign in now with new data", data: { user } });
 };
 

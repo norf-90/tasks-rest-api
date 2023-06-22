@@ -9,9 +9,8 @@ router
 	.post("/signin", userCtrl.signin)
 	.get("/current", authenticate, userCtrl.current)
 	.post("/logout", authenticate, userCtrl.logout)
-	.patch('/avatar', authenticate, upload.single('avatar'), userCtrl.updateAvatar)
+	.put('/avatar', authenticate, upload.single('avatar'), userCtrl.updateAvatar)
 	.patch('/updateUser', authenticate, userCtrl.updateUserInfo)
-	.get('/verify/:verificationToken', userCtrl.emailVerify)
 	.post('/verify', userCtrl.verify)
 
 module.exports = router;

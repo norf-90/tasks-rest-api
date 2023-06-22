@@ -1,6 +1,5 @@
 const cloudinary = require("cloudinary").v2;
 const { User } = require("../../models/authSchema");
-const fs = require("fs").promises;
 const { ctrlWrapper } = require("../../helpers");
 
 cloudinary.config({
@@ -16,9 +15,11 @@ const updateAvatar = async (req, res) => {
 	const resCloudinary = await cloudinary.uploader.upload(path, {
 		public_id: fileName,
 	});
-	await User.findByIdAndUpdate(_id, { avatarUrl: resCloudinary.url });
-	await fs.unlink(path);
-	res.json({ avatarUrl: resCloudinary.url });
+	await User.findByIdAndUpdate(_id, { avatarURL: resCloudinary.url });
+
+	res.json(
+		{avatarURL: resCloudinary.url}
+	);
 };
 
 module.exports = {
