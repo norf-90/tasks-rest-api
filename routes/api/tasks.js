@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 // const ctrl = require('../../controllers');
 const { validateBody, isValidId, authenticate } = require('../../middlewares');
-// const { schemas } = require('../../models/task');
+// const { schemas } = require('../../models/taskSchema');
 
 // get tasks on month
 router.get('/', authenticate);
@@ -17,4 +17,3 @@ router.delete('/{id}', authenticate, isValidId);
 router.patch('/{id}', authenticate, isValidId, validateBody());
 
 module.exports = router;
-
