@@ -5,7 +5,7 @@ const { ctrlWrapper } = require("../../helpers");
 const { HttpError } = require("../../helpers");
 
 const signin = async (req, res) => {
-	const { error } = schemas.userSchemaSignin.validate(req.body);
+	const { error } = schemas.loginSchema.validate(req.body);
 	if (error) throw HttpError(400, error.message);
 	const { email, password } = req.body;
 	const user = await User.findOne({ email });
@@ -19,9 +19,10 @@ const signin = async (req, res) => {
 		expiresIn: "24h",
 	});
 	await User.findByIdAndUpdate(user.id, { token });
+	const updatedUser = { ...user._doc, token };
 	res.json({
 		message: "Success Signed In",
-		user,
+		user: updatedUser,
 	});
 };
 

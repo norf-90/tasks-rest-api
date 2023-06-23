@@ -35,7 +35,7 @@ const signup = async (req, res) => {
 			  Thank you for signing up! To complete your registration, please click the button below to verify your email address.
 			</p>
 			<div style="text-align: center; margin-top: 30px;">
-			  <a href="${APP_HOST}/api/users/verify/${newUser.verificationToken}"
+			  <a href="${APP_HOST}/api/auth/verify/${newUser.verificationToken}"
 				style="display: inline-block; padding: 12px 24px; background-color: #4caf50; color: white; text-decoration: none; border-radius: 5px;">
 				Verify Email
 			  </a>
