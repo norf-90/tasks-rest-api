@@ -11,9 +11,9 @@ router.get('/', authenticate);
 router.post('/', authenticate, validateBody());
 
 // delete task
-router.delete('/{id}', authenticate, isValidId);
+router.delete('/:id', authenticate, isValidId);
 
 // change task
-router.patch('/{id}', authenticate, isValidId, validateBody());
+router.patch('/:id', authenticate, isValidId, validateBody());
 
 module.exports = router;
