@@ -3,8 +3,6 @@ const { HttpError } = require('../../helpers');
 const { User } = require('../../models/authSchema');
 
 const emailVerify = async (req, res) => {
-  console.log(req);
-  console.log('in emailVerify');
   const verificationToken = req.params.verificationToken;
   console.log(verificationToken);
   const findUser = await User.findOne({ verificationToken });
