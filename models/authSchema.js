@@ -32,9 +32,18 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-		verificationToken : {
-			type: String,
-      default: "",		}
+    verificationToken: {
+      type: String,
+      default: '',
+    },
+    birthday: {
+      type: String,
+      default: '',
+    },
+    skype: {
+      type: String,
+      default: '',
+    },
   },
   {
     versionKey: false,
@@ -113,6 +122,12 @@ const userUpdateSchema = Joi.object({
   }),
   avatarURL: Joi.string().messages({
     'string.base': 'Email field must be a string',
+  }),
+  birthday: Joi.string().messages({
+    'string.base': 'Birthday field must be a string',
+  }),
+  skype: Joi.string().messages({
+    'string.base': 'Skype field must be a string',
   }),
 });
 

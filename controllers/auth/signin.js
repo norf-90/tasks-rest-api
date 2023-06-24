@@ -23,8 +23,6 @@ const signin = async (req, res) => {
     expiresIn: '24h',
   });
   const newUser = await User.findByIdAndUpdate(user.id, { token });
-
-  console.log(newUser);
   const { token: prevToken, ...userInfo } = newUser._doc;
 
   res.json({
