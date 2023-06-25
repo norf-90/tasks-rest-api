@@ -1,5 +1,5 @@
-const { Task } = require("../../models/taskSchema");
-const { ctrlWrapper } = require("../../helpers");
+const { Task } = require('../../models/taskSchema');
+const { ctrlWrapper, HttpError } = require('../../helpers');
 
 const deleteTask = async (req, res) => {
   const { taskId } = req.params;
@@ -7,7 +7,7 @@ const deleteTask = async (req, res) => {
   if (!result) {
     throw HttpError(404, `Task id: ${taskId} not found`);
   }
-  res.json({ message: "Task deleted", result });
+  res.json({ message: 'Task deleted', result });
 };
 
 module.exports = {
