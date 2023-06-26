@@ -46,8 +46,15 @@ const taskSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
-taskSchema.pre('validate', function (next) {
+taskSchema.pre('save', function (next) {
   if (this.start > this.end) {
+    throw HttpError(400, 'End value must be greater than start value.');
+  }
+  next();
+});
+
+taskSchema.pre('findOneAndUpdate', async function (next) {
+  if (this._update.start > this._update.end) {
     throw HttpError(400, 'End value must be greater than start value.');
   }
   next();
