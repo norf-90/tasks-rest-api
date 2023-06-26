@@ -1,5 +1,5 @@
-const { Task } = require("../../models/taskSchema");
-const { ctrlWrapper } = require("../../helpers");
+const { Task } = require('../../models/taskSchema');
+const { ctrlWrapper } = require('../../helpers');
 
 const addTask = async (req, res) => {
   const { _id: owner } = req.user;

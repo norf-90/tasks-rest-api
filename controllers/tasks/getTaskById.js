@@ -8,8 +8,8 @@ const getTaskById = async (req, res) => {
   if (!result) {
     throw HttpError(404, `Task id: ${taskId} not found`);
   }
-  if (result.owner !== owner) {
-    throw HttpError(400);
+  if (!result.owner.equals(owner)) {
+    throw HttpError(403);
   }
   res.json(result);
 };

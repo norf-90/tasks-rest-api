@@ -1,30 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const tasksCtrl = require('../../controllers/tasks');
+const tasksCtrl = require('../../controllers');
 const { validateBody, isValidId, authenticate } = require('../../middlewares');
 const { schemas } = require('../../models/taskSchema');
 
 router.use(authenticate);
 
-// get all tasks
-router.get('/', tasksCtrl.getAllTasks);
-
-// get tasks for month
-router.get('/month', tasksCtrl.getTasksForMonth);
-
-// get tasks for day
-router.get('/day', tasksCtrl.getTasksForDay);
-
-// get task by id
-router.get('/:taskId', isValidId, tasksCtrl.getTaskById);
-
-// post new task
-router.post('/', validateBody(schemas.addSchema), tasksCtrl.addTask);
-
-// update task
-router.patch('/:taskId', isValidId, validateBody(schemas.addSchema), tasksCtrl.updateTask);
-
-// delete task
-router.delete('/:taskId', isValidId, tasksCtrl.deleteTask);
+router
+  .get('/', tasksCtrl.getAllTasks)
+  .get('/month', tasksCtrl.getTasksForMonth)
+  .get('/day', tasksCtrl.getTasksForDay)
+  .get('/:taskId', isValidId, tasksCtrl.getTaskById)
+  .post('/', validateBody(schemas.addSchema), tasksCtrl.addTask)
+  .patch('/:taskId', isValidId, validateBody(schemas.addSchema), tasksCtrl.updateTask)
+  .delete('/:taskId', isValidId, tasksCtrl.deleteTask);
 
 module.exports = router;

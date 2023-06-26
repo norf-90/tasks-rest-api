@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const Joi = require('joi');
-const { handleMongooseError, HttpError } = require('../helpers');
+
+const { handleMongooseError, HttpError, checkDate } = require('../helpers');
 
 const timeRegExp = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/; // HH:MM 24-hour with leading 0
 const dateRegExp = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/; // exact match for yyyy-mm-dd
@@ -50,6 +51,8 @@ taskSchema.pre('save', function (next) {
   if (this.start > this.end) {
     throw HttpError(400, 'End value must be greater than start value.');
   }
+  console.log(this.date);
+  checkDate(this.date);
   next();
 });
 
@@ -57,6 +60,7 @@ taskSchema.pre('findOneAndUpdate', async function (next) {
   if (this._update.start > this._update.end) {
     throw HttpError(400, 'End value must be greater than start value.');
   }
+  checkDate(this._update.date);
   next();
 });
 
@@ -106,11 +110,3 @@ module.exports = {
   Task,
   schemas,
 };
-
-//   title: 'max250 | required',
-//   start: 'format "09:00" | required',
-//   end: 'format "09:30" | end > start | required ',
-//   priority: ' low medium high  | required',
-//   date: 'format YYYY-MM-DD | required',
-//   category: ' todo in-progres done | require',
-//   owner: 'userId'
