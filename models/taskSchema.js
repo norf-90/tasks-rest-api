@@ -51,7 +51,6 @@ taskSchema.pre('save', function (next) {
   if (this.start > this.end) {
     throw HttpError(400, 'End value must be greater than start value.');
   }
-  console.log(this.date);
   checkDate(this.date);
   next();
 });
