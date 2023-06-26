@@ -1,14 +1,16 @@
-const { Task } = require('../../models/taskSchema');
-const { ctrlWrapper } = require('../../helpers');
+const { Task } = require("../../models/taskSchema");
+const { ctrlWrapper } = require("../../helpers");
 
 const getTasksForMonth = async (req, res) => {
   const { _id: owner } = req.user;
-  const { month } = req.query; // YYYY-MM
-  const result = await Task.find(
-    { owner, date: { $regex: `${month}` } },
-    '-createdAt -updatedAt'
-  ).populate('owner');
+  const { date } = req.query; // YYYY-MM-DD
+  const year = date.split("-")[0];
+  const month = date.split("-")[1];
 
+  const result = await Task.find(
+    { owner, date: { $regex: `${year}-${month}` } },
+    "-createdAt -updatedAt"
+  ).populate("owner", "name");
   res.json(result);
 };
 
