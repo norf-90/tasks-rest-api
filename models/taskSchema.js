@@ -5,7 +5,7 @@ const { handleMongooseError, HttpError } = require('../helpers');
 const timeRegExp = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/; // HH:MM 24-hour with leading 0
 const dateRegExp = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/; // exact match for yyyy-mm-dd
 
-const taskShema = new Schema(
+const taskSchema = new Schema(
   {
     title: {
       type: String,
@@ -46,19 +46,19 @@ const taskShema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
-taskShema.pre('validate', function (next) {
+taskSchema.pre('validate', function (next) {
   if (this.start > this.end) {
-    throw HttpError(400, 'End value must be larger than start value.');
+    throw HttpError(400, 'End value must be greater than start value.');
   }
   next();
 });
 
-taskShema.post('save', handleMongooseError);
-const Task = model('task', taskShema);
+taskSchema.post('save', handleMongooseError);
+const Task = model('task', taskSchema);
 
 // ------------------------------JOI---------------------------------
 
-const addShema = Joi.object({
+const addSchema = Joi.object({
   title: Joi.string().max(250).required().messages({
     'any.required': 'Missing required title field',
     'string.base': 'Tittle field should be a string',
@@ -91,13 +91,13 @@ const addShema = Joi.object({
   }),
 });
 
-const shemas = {
-  addShema,
+const schemas = {
+  addSchema,
 };
 
 module.exports = {
   Task,
-  shemas,
+  schemas,
 };
 
 //   title: 'max250 | required',
