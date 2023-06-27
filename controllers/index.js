@@ -1,13 +1,4 @@
-const {
-  signup,
-  signin,
-  current,
-  logout,
-  updateAvatar,
-  updateUserInfo,
-  emailVerify,
-  verify,
-} = require('./auth');
+const { signup, signin, current, logout, updateUserInfo, emailVerify, verify } = require('./auth');
 
 const {
   getAllTasks,
@@ -24,7 +15,6 @@ module.exports = {
   signin,
   current,
   logout,
-  updateAvatar,
   updateUserInfo,
   emailVerify,
   verify,
