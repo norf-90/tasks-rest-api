@@ -44,6 +44,10 @@ const userSchema = new Schema(
       type: String,
       default: '',
     },
+    phone: {
+      type: String,
+      default: '',
+    },
   },
   {
     versionKey: false,
@@ -128,6 +132,9 @@ const userUpdateSchema = Joi.object({
   }),
   skype: Joi.string().messages({
     'string.base': 'Skype field must be a string',
+  }),
+  phone: Joi.string().messages({
+    'string.base': 'Phone field must be a string',
   }),
 });
 
