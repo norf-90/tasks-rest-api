@@ -5,20 +5,22 @@ const { User } = require('../../models/authSchema');
 
 const updateUserInfo = async (req, res) => {
   const { _id } = req.user;
-  const { path, originalname } = req.file;
+  let avatarURL = req.user.avatarURL;
   const password = req.body.password;
 
-  const fileName = `${_id}${originalname}`;
-  const resCloudinary = await cloudinary.uploader.upload(path, {
-    public_id: fileName,
-  });
+  if (req.file) {
+    const { path, originalname } = req.file;
+    const fileName = `${_id}${originalname}`;
+    avatarURL = await cloudinary.uploader.upload(path, {
+      public_id: fileName,
+    }).url;
+  }
 
   if (password) {
     const hashPassword = await bcrypt.hash(password, 10);
-
     const result = await User.findByIdAndUpdate(
       _id,
-      { ...req.body, avatarURL: resCloudinary.url },
+      { ...req.body, avatarURL },
       {
         new: true,
       }
