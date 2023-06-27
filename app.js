@@ -20,7 +20,7 @@ app.use(express.json());
 app.use("/api/auth", usersAuth);
 app.use("/api/tasks", tasksRouter);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use("/api/tasks/statistics", statistics);
+app.use("/api/statistics", statistics);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
