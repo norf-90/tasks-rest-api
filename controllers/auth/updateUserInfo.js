@@ -5,51 +5,31 @@ const { User } = require('../../models/authSchema');
 
 const updateUserInfo = async (req, res) => {
   const { _id } = req.user;
-  let avatarURL = req.user.avatarURL;
-  const password = req.body.password;
-
+  const { name, email, password, skype, birthday, phone } = req.body;
+  const user = await User.findById({ _id });
+  if (name) user.name = name;
+  if (email) user.email = email;
+  if (password) {
+    const hashPassword = await bcrypt.hash(password, 10);
+    user.password = hashPassword;
+  }
+  if (skype) user.skype = skype;
+  if (birthday) user.birthday = birthday;
+  if (phone) user.phone = phone;
   if (req.file) {
     const { path, originalname } = req.file;
     const fileName = `${_id}${originalname}`;
-    avatarURL = await cloudinary.uploader.upload(path, {
+    const result = await cloudinary.uploader.upload(path, {
       public_id: fileName,
-    }).url;
-  }
-
-  if (password) {
-    const hashPassword = await bcrypt.hash(password, 10);
-    const result = await User.findByIdAndUpdate(
-      _id,
-      { ...req.body, avatarURL },
-      {
-        new: true,
-      }
-    );
-    const { token, ...userInfo } = result._doc;
-
-    res.json({
-      message: 'Success changed',
-      user: { ...userInfo, password: hashPassword },
-      token,
     });
+    user.avatarURL = result.url;
   }
+  await user.save();
+  res.json({
+    message: 'Success changed',
+    user,
+  });
 };
-
-// const updateUserInfo = async (req, res) => {
-// 	const { _id } = req.user;
-// 	const { name, email, password } = req.body;
-// 	const user = await User.findById({ _id });
-// 	if (!user) throw HttpError(404, "User not found");
-// 	if (name) user.name = name;
-// 	if (email) user.email = email;
-// 	if (password) {
-// 		const hashPassword = await bcrypt.hash(password, 10);
-// 		user.password = hashPassword;
-// 	}
-// 	await user.save();
-// 	await User.findByIdAndUpdate(_id, {token: null});
-// res.json({ message: "Success changed, sign in now with new data", data: { user } });
-// };
 
 module.exports = {
   updateUserInfo: ctrlWrapper(updateUserInfo),
