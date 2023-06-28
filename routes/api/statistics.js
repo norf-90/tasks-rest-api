@@ -1,8 +1,8 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const { authenticate, generateStatistics } = require('../../middlewares');
+const statsCtrl = require('../../controllers');
 
-const userCtrl = require("../../controllers");
-
-router.get("/", userCtrl.statistics);
+router.get('/', authenticate, generateStatistics, statsCtrl.statistics);
 
 module.exports = router;

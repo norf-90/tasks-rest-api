@@ -10,6 +10,8 @@ const {
   deleteTask,
 } = require('./tasks');
 
+const { statistics } = require('./statistics');
+
 module.exports = {
   signup,
   signin,
@@ -26,4 +28,6 @@ module.exports = {
   addTask,
   updateTask,
   deleteTask,
+
+  statistics,
 };

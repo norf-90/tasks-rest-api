@@ -3,6 +3,7 @@ const ctrlWrapper = require('./ctrlWrapper');
 const handleMongooseError = require('./handleMongooseError');
 const sendEmail = require('./sendEmail');
 const checkDate = require('./checkDate');
+const countStatistics = require('./countStatistics');
 
 module.exports = {
   HttpError,
@@ -10,4 +11,5 @@ module.exports = {
   handleMongooseError,
   sendEmail,
   checkDate,
+  countStatistics,
 };
