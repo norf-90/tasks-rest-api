@@ -1,22 +1,22 @@
 const express = require('express');
 const router = express.Router();
-// const ctrl = require('../../controllers');
+const reviewsCtrl = require('../../controllers');
 const { validateBody, isValidId, authenticate } = require('../../middlewares');
 // const { schemas } = require('../../models/review');
 
 // get all reviews
-router.get('/');
+router.get('/', reviewsCtrl.getAllReviews);
 
 // get own reviews
-router.get('/own', authenticate);
+router.get("/own", authenticate, reviewsCtrl.getUserReview);
 
 // create review
-router.post('/own', authenticate, validateBody());
+router.post("/own", authenticate, validateBody(), reviewsCtrl.addUserReview);
 
 // delete own review
-router.delete('/own', authenticate, isValidId);
+router.delete('/own', authenticate, isValidId, reviewsCtrl.deleteUserReview);
 
 // change own review
-router.patch('/own', authenticate, isValidId, validateBody());
+router.patch("/own", authenticate, isValidId, validateBody(), reviewsCtrl.editUserReview);
 
 module.exports = router;
