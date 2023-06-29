@@ -30,7 +30,7 @@ const Review = model('review', reviewSchema);
 
 // ---------------JOI--------------------------
 
-const addShema = Joi.object({
+const addSchema = Joi.object({
   name: Joi.string().required().messages({
     'any.required': 'Missing required name field',
     'string.base': 'Name field should be a string',
@@ -42,11 +42,11 @@ const addShema = Joi.object({
   }),
 });
 
-const shemas = {
-  addShema,
+const schemas = {
+  addSchema,
 };
 
 module.exports = {
   Review,
-  shemas,
+  schemas,
 };
