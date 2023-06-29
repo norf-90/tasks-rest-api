@@ -10,7 +10,16 @@ const {
   deleteTask,
 } = require('./tasks');
 
+const {
+  getAllReviews,
+  getUserReview,
+  addUserReview,
+  editUserReview,
+  deleteUserReview,
+} = require("./reviews");
+
 const { statistics } = require('./statistics');
+
 
 module.exports = {
   signup,
@@ -28,6 +37,13 @@ module.exports = {
   addTask,
   updateTask,
   deleteTask,
+
+
+  getAllReviews,
+  getUserReview,
+  addUserReview,
+  editUserReview,
+  deleteUserReview,
 
   statistics,
 };

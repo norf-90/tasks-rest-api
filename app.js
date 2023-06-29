@@ -7,7 +7,9 @@ require('dotenv').config();
 
 const usersAuth = require('./routes/api/auth');
 const tasksRouter = require('./routes/api/tasks');
+const reviewsRouter = require('./routes/api/reviews');
 const statistics = require('./routes/api/statistics');
+
 
 const app = express();
 
@@ -19,6 +21,7 @@ app.use(express.json());
 
 app.use('/api/auth', usersAuth);
 app.use('/api/tasks', tasksRouter);
+app.use('/api/reviews', reviewsRouter);
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/statistics', statistics);
 
