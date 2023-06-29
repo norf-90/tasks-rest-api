@@ -22,6 +22,11 @@ router.post(
 router.delete('/own', authenticate, isValidId, reviewsCtrl.deleteUserReview);
 
 // change own review
-router.patch("/own", authenticate, isValidId, validateBody(), reviewsCtrl.editUserReview);
+router.patch(
+  "/own",
+  authenticate,
+  validateBody(schemas.addSchema),
+  reviewsCtrl.editUserReview
+);
 
 module.exports = router;
