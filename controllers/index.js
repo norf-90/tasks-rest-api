@@ -18,6 +18,9 @@ const {
   deleteUserReview,
 } = require("./reviews");
 
+const { statistics } = require('./statistics');
+
+
 module.exports = {
   signup,
   signin,
@@ -35,9 +38,12 @@ module.exports = {
   updateTask,
   deleteTask,
 
+
   getAllReviews,
   getUserReview,
   addUserReview,
   editUserReview,
   deleteUserReview,
+
+  statistics,
 };
