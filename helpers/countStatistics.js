@@ -5,7 +5,7 @@ const countStatistics = tasks => {
         case 'todo':
           reducer.increaseToDo(array);
           break;
-        case 'in-progres':
+        case 'in-progress':
           reducer.increaseInProgres(array);
           break;
         case 'done':

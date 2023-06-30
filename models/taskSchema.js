@@ -36,7 +36,7 @@ const taskSchema = new Schema(
     category: {
       type: String,
       required: true,
-      enum: ['todo', 'in-progres', 'done'],
+      enum: ['todo', 'in-progress', 'done'],
     },
     owner: {
       type: Schema.Types.ObjectId,
@@ -94,9 +94,9 @@ const addSchema = Joi.object({
     'any.required': 'Missing required date field',
     'string.pattern.base': 'Date field should be in format "YYYY-MM-DD"',
   }),
-  category: Joi.string().valid('todo', 'in-progres', 'done').required().messages({
+  category: Joi.string().valid('todo', 'in-progress', 'done').required().messages({
     'string.base': 'Category field should be a string',
-    'any.only': "Category field should be only 'todo', 'in-progres' or 'done'",
+    'any.only': "Category field should be only 'todo', 'in-progress' or 'done'",
     'any.required': 'Missing required category field',
   }),
 });
