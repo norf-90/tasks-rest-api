@@ -3,7 +3,7 @@
   "info": {
     "version": "1.0.1",
     "title": "GooseTrack",
-    "description": "rest-api docs for GooseTrack project",
+    "description": "Documentation for GooseTrack project",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -11,7 +11,10 @@
   },
   "consumes": ["application/json", "multipart/form-data"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:3001/api" }],
+  "servers": [
+    { "url": "https://goose-track-ity9.onrender.com" },
+    { "url": "http://localhost:3001" }
+  ],
   "tags": [
     {
       "name": "Auth",
@@ -24,44 +27,297 @@
     {
       "name": "Reviews",
       "description": "Reviews endpoints"
-    }
+    },
+    { "name": "Statistics", "description": "Statistics endpointst" }
   ],
+
   "paths": {
-    "/auth/register": {
+    "/api/auth/signup": {
       "post": {
         "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Registration's object",
+          "description": "Signup body",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/SignupRequest"
               }
             }
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "$ref": "#/components/schemas/SignupResponse200"
                 }
               }
             }
           },
           "400": {
             "description": "Bad request (invalid request body)",
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignupSigninUpdateResponse400"
+                }
+              }
+            }
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Email already in use",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignupResponse409"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/verify": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Resend verification email",
+        "parameters": [],
+        "requestBody": {
+          "description": "Verify body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendVerificationEmailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResendVerificationEmailResponse200"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResendVerificationEmailResponse400"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/verify/{verificationToken}": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Verificate user's email",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "verificationToken",
+            "required": true,
+            "type": "string",
+            "description": "Verification token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationResponse200"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "invalid verification token or email already validated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationResponse404"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User signin",
+        "parameters": [],
+        "requestBody": {
+          "description": "Signin body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SigninRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SigninResponse200"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignupSigninUpdateResponse400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Wrong email or password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SigninResponse401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogoutResponse200"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get current user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCurrentResponce200"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/updateUser": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Update user's data",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Update user's data",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateResponse200"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignupSigninUpdateResponse400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
           }
         }
       }
@@ -69,14 +325,20 @@
   },
   "components": {
     "schemas": {
-      "RegistrationRequest": {
+      "SignupRequest": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": ["name", "email", "password"],
         "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Brendan Eich "
+          },
           "email": {
             "type": "string",
             "description": "User's email",
-            "format": "email"
+            "format": "email",
+            "example": "brendan.eich@mail.com"
           },
           "password": {
             "type": "string",
@@ -85,27 +347,533 @@
           }
         }
       },
-      "RegistrationResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "email": {
-              "type": "string",
-              "description": "User's email",
-              "format": "email"
-            },
-            "userId": {
-              "type": "number",
-              "description": "User's id",
-              "example": "32143232436545474"
+      "SignupResponse200": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "example": "User created successfully"
+          },
+          "newUser": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "user's name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+              },
+              "password": {
+                "type": "string",
+                "description": "User's hashed password"
+              },
+              "token": {
+                "type": "string",
+                "description": "User's token. Default value is empty string."
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar URL. Generated by default."
+              },
+              "verify": {
+                "type": "boolean",
+                "description": "Verifying flag. Change to true after email verification",
+                "example": false
+              },
+              "verificationToken": {
+                "type": "string",
+                "description": "Verification token"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "User's date of birth. Default value is empty string."
+              },
+              "skype": {
+                "type": "string",
+                "description": "User's skype number. Default value is empty string."
+              },
+              "phone": {
+                "type": "string",
+                "description": "User's phone number. Default value is empty string."
+              },
+              "_id": {
+                "type": "string",
+                "description": "User's id in database."
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "Date of creating new user"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "Date of updating user"
+              }
             }
           }
         },
+        "example": {
+          "message": "User created successfully",
+          "newUser": {
+            "name": "User 1",
+            "email": "samoko1175@devswp.com",
+            "password": "$2b$10$BvjmeZe6r5zZf8VheH1ViuDiSWqsCFF3Uvyjj4r4N5g5UBbNrmo72",
+            "token": "",
+            "avatarURL": "https://avataaars.io/?accessoriesType=Wayfa...",
+            "verify": false,
+            "verificationToken": "81ddba7a-1b9b-4b9e-947f-007aab999f16",
+            "birthday": "",
+            "skype": "",
+            "phone": "",
+            "_id": "649d6d000a7165fe436e3980",
+            "createdAt": "2023-06-29T11:37:36.443Z",
+            "updatedAt": "2023-06-29T11:37:36.443Z"
+          }
+        }
+      },
+      "SignupSigninUpdateResponse400": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "example": "Name field must be a string"
+          }
+        },
         "example": [
-          { "email": "1@gmail.com", "userId": "1" },
-          { "email": "2@gmail.com", "userId": "2" }
+          {
+            "message": "Email field may contain only latin letters, numbers, signs (\"_\", \".\", \"-\"). Must contain @ and domain."
+          },
+          {
+            "message": "Password field must be a string"
+          },
+          {
+            "message": "Missing required password field"
+          }
         ]
+      },
+      "SignupResponse409": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "example": "Email already in use"
+          }
+        },
+        "example": {
+          "message": "Email already in use"
+        }
+      },
+      "ResendVerificationEmailRequest": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "brendan.eich@mail.com"
+          }
+        }
+      },
+      "ResendVerificationEmailResponse200": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response",
+            "example": "Verification email sent"
+          }
+        }
+      },
+      "ResendVerificationEmailResponse400": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response",
+            "example": "Verification has already been passed"
+          }
+        },
+        "example": [
+          { "message": "Verification has already been passed" },
+          {
+            "message": "missing required field email"
+          }
+        ]
+      },
+      "VerificationResponse200": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response",
+            "example": "Verification successful"
+          }
+        },
+        "example": [
+          {
+            "message": "Verification successful"
+          }
+        ]
+      },
+      "VerificationResponse404": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response",
+            "example": "User not found"
+          }
+        },
+        "example": [
+          {
+            "message": "User not found"
+          }
+        ]
+      },
+      "SigninRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "brendan.eich@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "SigninResponse200": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "example": "Success Signed In"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "user's name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+              },
+              "password": {
+                "type": "string",
+                "description": "User's hashed password"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar URL"
+              },
+              "verify": {
+                "type": "boolean",
+                "description": "Verifying flag. Change to true after email verification",
+                "example": true
+              },
+              "verificationToken": {
+                "type": "string",
+                "description": "Verification token"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "User's date of birth. Default value is empty string."
+              },
+              "skype": {
+                "type": "string",
+                "description": "User's skype number. Default value is empty string."
+              },
+              "phone": {
+                "type": "string",
+                "description": "User's phone number. Default value is empty string."
+              },
+              "_id": {
+                "type": "string",
+                "description": "User's id in database."
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "Date of creating new user"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "Date of updating user"
+              }
+            }
+          },
+          "token": {
+            "type": "string",
+            "description": "User's token"
+          }
+        },
+        "example": {
+          "message": "Success Signed In",
+          "user": {
+            "_id": "649edb80aa1270509e5ce7e9",
+            "name": "Oleksandr",
+            "email": "todafa8464@dronetz.com",
+            "password": "$2b$10$onba/VGbS1lSoojpQODI9uI0XHjqWAAW4OAQXtVexK0V5u8tnJkjO",
+            "avatarURL": "https://avataaars.io/?accessoriesType=Blank&avatarStyle ...",
+            "verify": true,
+            "verificationToken": null,
+            "birthday": "",
+            "skype": "",
+            "phone": "",
+            "createdAt": "2023-06-30T13:41:20.176Z",
+            "updatedAt": "2023-06-30T13:41:38.678Z"
+          },
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OWVkYjgwYWExMjcwNTA5ZTVjZTdlOSIsImlhdCI6MTY4ODEzMjUzNSwiZXhwIjoxNjg4MjE4OTM1fQ.iel1IUceEFWfizYVXE5Xfb0F4cVcDvdq0cW83KXlBIQ"
+        }
+      },
+      "SigninResponse401": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message"
+          }
+        },
+        "example": {
+          "message": "Email or Password wrong"
+        }
+      },
+      "LogoutResponse200": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message"
+          }
+        },
+        "example": {
+          "message": "Logout success"
+        }
+      },
+      "Unauthorized401": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message"
+          }
+        },
+        "example": {
+          "message": "Unauthorized"
+        }
+      },
+      "GetCurrentResponce200": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "user's name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+              },
+              "password": {
+                "type": "string",
+                "description": "User's hashed password"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar URL"
+              },
+              "verify": {
+                "type": "boolean",
+                "description": "Verifying flag. Change to true after email verification",
+                "example": true
+              },
+              "verificationToken": {
+                "type": "string",
+                "description": "Verification token"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "User's date of birth. Default value is empty string."
+              },
+              "skype": {
+                "type": "string",
+                "description": "User's skype number. Default value is empty string."
+              },
+              "phone": {
+                "type": "string",
+                "description": "User's phone number. Default value is empty string."
+              },
+              "_id": {
+                "type": "string",
+                "description": "User's id in database."
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "Date of creating new user"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "Date of updating user"
+              }
+            }
+          },
+          "token": {
+            "type": "string",
+            "description": "User's token"
+          }
+        },
+        "example": {
+          "message": "Success Signed In",
+          "user": {
+            "_id": "649edb80aa1270509e5ce7e9",
+            "name": "Oleksandr",
+            "email": "todafa8464@dronetz.com",
+            "password": "$2b$10$onba/VGbS1lSoojpQODI9uI0XHjqWAAW4OAQXtVexK0V5u8tnJkjO",
+            "avatarURL": "https://avataaars.io/?accessoriesType=Bla ...",
+            "verify": true,
+            "verificationToken": null,
+            "birthday": "",
+            "skype": "",
+            "phone": "",
+            "createdAt": "2023-06-30T13:41:20.176Z",
+            "updatedAt": "2023-06-30T13:41:38.678Z"
+          },
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OWVkYjgwYWExMjcwNTA5ZTVjZTdlOSIsImlhdCI6MTY4ODEzMjUzNSwiZXhwIjoxNjg4MjE4OTM1fQ.iel1IUceEFWfizYVXE5Xfb0F4cVcDvdq0cW83KXlBIQ"
+        }
+      },
+      "UpdateRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password"
+          },
+          "skype": {
+            "type": "string",
+            "description": "User's skype"
+          },
+          "phone": {
+            "type": "string",
+            "description": "User's phone number"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "UpdateResponse200": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "example": "Success changed"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "user's name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+              },
+              "password": {
+                "type": "string",
+                "description": "User's hashed password"
+              },
+              "token": {
+                "type": "string",
+                "description": "User's token"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar URL"
+              },
+              "verify": {
+                "type": "boolean",
+                "description": "Verifying flag. Change to true after email verification",
+                "example": true
+              },
+              "verificationToken": {
+                "type": "string",
+                "description": "Verification token"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "User's date of birth. Default value is empty string."
+              },
+              "skype": {
+                "type": "string",
+                "description": "User's skype number. Default value is empty string."
+              },
+              "phone": {
+                "type": "string",
+                "description": "User's phone number. Default value is empty string."
+              },
+              "_id": {
+                "type": "string",
+                "description": "User's id in database."
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "Date of creating new user"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "Date of updating user"
+              }
+            }
+          }
+        },
+        "example": {
+          "message": "Success Signed In",
+          "user": {
+            "_id": "649edb80aa1270509e5ce7e9",
+            "name": "Oleksandr",
+            "email": "todafa8464@dronetz.com",
+            "password": "$2b$10$onba/VGbS1lSoojpQODI9uI0XHjqWAAW4OAQXtVexK0V5u8tnJkjO",
+            "avatarURL": "https://avataaars.io/?accessoriesType=Blank&avatarStyle ...",
+            "verify": true,
+            "verificationToken": null,
+            "birthday": "",
+            "skype": "",
+            "phone": "",
+            "createdAt": "2023-06-30T13:41:20.176Z",
+            "updatedAt": "2023-06-30T13:41:38.678Z"
+          },
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OWVkYjgwYWExMjcwNTA5ZTVjZTdlOSIsImlhdCI6MTY4ODEzMjUzNSwiZXhwIjoxNjg4MjE4OTM1fQ.iel1IUceEFWfizYVXE5Xfb0F4cVcDvdq0cW83KXlBIQ"
+        }
       }
     },
     "securitySchemes": {

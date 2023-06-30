@@ -4,7 +4,6 @@ const { User } = require('../../models/authSchema');
 
 const emailVerify = async (req, res) => {
   const verificationToken = req.params.verificationToken;
-  console.log(verificationToken);
   const findUser = await User.findOne({ verificationToken });
 
   if (!findUser || findUser.verify) throw HttpError(404, 'User not found');
