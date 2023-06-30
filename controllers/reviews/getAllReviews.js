@@ -1,9 +1,13 @@
 const { Review } = require("../../models/reviewSchema");
 const { User } = require("../../models/authSchema");
-const { ctrlWrapper } = require("../../helpers");
+const { ctrlWrapper, HttpError } = require("../../helpers");
 
 const getAllReviews = async (req, res) => {
   const resultReviews = await Review.find({});
+
+  if (!resultReviews) {
+    throw HttpError(404, "Reviews not found");
+  }
 
   const updatedReviews = await Promise.all(
     resultReviews.map(async (item) => {
