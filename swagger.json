@@ -671,6 +671,203 @@
           }
         }
       }
+    },
+    "/api/reviews": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get all reviews",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetReviews200"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reviews404"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reviews/own": {
+      "post": {
+        "tags": ["Reviews"],
+        "summary": "Get own review",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Signup body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddUpdateReviewRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddUpdateReview200"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddUpdateReview400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reviews404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddReview409"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Reviews"],
+        "summary": "Get own review",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Update body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddUpdateReviewRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddUpdateReview200"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddUpdateReview400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reviews404"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Reviews"],
+        "summary": "Get own review",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteReview200"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reviews404"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1697,6 +1894,185 @@
             "createdAt": "2023-07-01T07:51:35.532Z",
             "updatedAt": "2023-07-01T14:10:56.085Z"
           }
+        }
+      },
+      "GetReviews200": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Task id"
+            },
+            "name": {
+              "type": "string",
+              "description": "Review owner's name"
+            },
+            "comment": {
+              "type": "comment",
+              "description": "Content"
+            },
+            "rating": {
+              "type": "number",
+              "description": "Review rating"
+            },
+            "owner": { "type": "string", "description": "Owner's id" },
+            "avatarURL": { "type": "string", "description": "Owner's avatar URL" }
+          }
+        },
+        "example": [
+          {
+            "_id": "64941248556ca8e6574c00aa",
+            "name": "Kateryna Hilcher",
+            "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers! ",
+            "rating": 4,
+            "owner": "64941248556ca8e6574c00ab",
+            "avatarURL": "http://res.cloudinary.com/dotk2lk3j/image/upload/v1688139484/649edb80aa12 ..."
+          },
+          {
+            "_id": "64941248556ca8e6574c00ab",
+            "name": "Mykola Kapytaniuk",
+            "comment": "Very cool app, everything is clear and functional. A great program for time chronology.",
+            "rating": 1,
+            "owner": "64941248556ca8e6574c00ab",
+            "avatarURL": "http://res.cloudinary.com/dotk2lk3j/image/upload/v1688139484/649edb80aa12 ..."
+          },
+          {
+            "_id": "64941248556ca8e6574c00ac",
+            "name": "Ihor Dronenko",
+            "comment": "Really helps to increase productivity. The application has a clear interface and useful features. I like it at the initial stage. ",
+            "rating": 3,
+            "owner": "64941248556ca8e6574c00ab",
+            "avatarURL": "http://res.cloudinary.com/dotk2lk3j/image/upload/v1688139484/649edb80aa12 ..."
+          },
+          {
+            "_id": "64941248556ca8e6574c00ad",
+            "name": "Volodymyr Shvets",
+            "comment": "A good, visual time planning program.",
+            "rating": 5,
+            "owner": "64941248556ca8e6574c00ab",
+            "avatarURL": "http://res.cloudinary.com/dotk2lk3j/image/upload/v1688139484/649edb80aa12 ..."
+          }
+        ]
+      },
+      "AddUpdateReviewRequest": {
+        "type": "object",
+        "required": ["name", "comment", "rating"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Review owner's name"
+          },
+          "comment": {
+            "type": "comment",
+            "description": "Content"
+          },
+          "rating": {
+            "type": "number",
+            "description": "Review rating"
+          }
+        },
+        "example": {
+          "name": "John Dou",
+          "comment": "It's a wonderfull app.",
+          "rating": 5
+        }
+      },
+      "AddUpdateReview200": {
+        "type": "object",
+        "required": ["name", "comment", "rating"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Review owner's name"
+          },
+          "comment": {
+            "type": "comment",
+            "description": "Content"
+          },
+          "rating": {
+            "type": "number",
+            "description": "Review rating"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner's id"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Task id"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Date of creating review"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Date of updating review"
+          }
+        },
+        "example": {
+          "name": "John Dou",
+          "comment": "It's a wonderfull app.",
+          "rating": 5,
+          "owner": "649edb80aa1270509e5ce7e9",
+          "_id": "64a057d151366ec9819ae2b2",
+          "createdAt": "2023-07-01T16:44:01.827Z",
+          "updatedAt": "2023-07-01T16:44:01.827Z"
+        }
+      },
+      "AddReview409": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message"
+          }
+        },
+        "example": {
+          "message": "The review exists"
+        }
+      },
+      "AddUpdateReview400": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message"
+          }
+        },
+        "example": [
+          {
+            "message": "\"rating\" is required"
+          },
+          {
+            "message": "Comment field should be a string"
+          }
+        ]
+      },
+      "DeleteReview200": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message"
+          }
+        },
+        "example": {
+          "message": "Reviews deleted"
+        }
+      },
+      "Reviews404": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response"
+          }
+        },
+        "example": {
+          "message": "Reviews not found"
         }
       }
     },
