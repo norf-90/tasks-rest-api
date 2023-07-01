@@ -702,9 +702,47 @@
       }
     },
     "/api/reviews/own": {
-      "post": {
+      "get": {
         "tags": ["Reviews"],
         "summary": "Get own review",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddUpdateReview200"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reviews404"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Reviews"],
+        "summary": "Add own review",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -773,7 +811,7 @@
       },
       "patch": {
         "tags": ["Reviews"],
-        "summary": "Get own review",
+        "summary": "Update own review",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -832,7 +870,7 @@
       },
       "delete": {
         "tags": ["Reviews"],
-        "summary": "Get own review",
+        "summary": "Delete own review",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "responses": {
@@ -862,6 +900,56 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Reviews404"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/statistics": {
+      "get": {
+        "tags": ["Statistics"],
+        "summary": "Get statistics for current user",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "type": "string",
+            "description": "Date in format YYYY-MM-DD with leading 0",
+            "example": "2023-07-01"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Statistics200"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Statistics400"
                 }
               }
             }
@@ -2074,6 +2162,124 @@
         "example": {
           "message": "Reviews not found"
         }
+      },
+      "Statistics200": {
+        "type": "object",
+        "properties": {
+          "todo": {
+            "type": "object",
+            "description": "values for todo tasks",
+            "properties": {
+              "forDays": {
+                "type": "object",
+                "properties": {
+                  "percents": {
+                    "type": "number",
+                    "descritption": "todo tasks for days in percents"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "descritption": "todo tasks for days in points"
+                  }
+                }
+              },
+              "forMonth": {
+                "type": "object",
+                "properties": {
+                  "percents": {
+                    "type": "number",
+                    "descritption": "todo tasks for month in percents"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "descritption": "todo tasks for month in points"
+                  }
+                }
+              }
+            }
+          },
+          "inProgres": {
+            "type": "object",
+            "description": "values for in-progress tasks",
+            "properties": {
+              "forDays": {
+                "type": "object",
+                "properties": {
+                  "percents": {
+                    "type": "number",
+                    "descritption": "in-progress tasks for days in percents"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "descritption": "in-progress tasks for days in points"
+                  }
+                }
+              },
+              "forMonth": {
+                "type": "object",
+                "properties": {
+                  "percents": {
+                    "type": "number",
+                    "descritption": "in-progress tasks for month in percents"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "descritption": "in-progress tasks for month in points"
+                  }
+                }
+              }
+            }
+          },
+          "done": {
+            "type": "object",
+            "description": "values for done tasks",
+            "properties": {
+              "forDays": {
+                "type": "object",
+                "properties": {
+                  "percents": {
+                    "type": "number",
+                    "descritption": "done tasks for days in percents"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "descritption": "done tasks for days in points"
+                  }
+                }
+              },
+              "forMonth": {
+                "type": "object",
+                "properties": {
+                  "percents": {
+                    "type": "number",
+                    "descritption": "done tasks for month in percents"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "descritption": "done tasks for month in points"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Statistics400": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response"
+          }
+        },
+        "example": [
+          {
+            "message": "Date should be in format YYYY-MM-DD"
+          },
+          {
+            "message": "Nonexistent date"
+          }
+        ]
       }
     },
     "securitySchemes": {

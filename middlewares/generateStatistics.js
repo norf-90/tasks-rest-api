@@ -1,9 +1,10 @@
 const { Task } = require('../models/taskSchema');
-const { ctrlWrapper, countStatistics, HttpError } = require('../helpers');
+const { ctrlWrapper, countStatistics, HttpError, checkDate } = require('../helpers');
 
 const generateStatistics = async (req, res, next) => {
   const { _id: owner } = req.user;
   const { date } = req.query; // YYYY-MM-DD
+  checkDate(date);
   const dateRegExp = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
   if (!date.match(dateRegExp)) throw HttpError(400, 'Date should be in format YYYY-MM-DD');
   const [year, month] = date.split('-');
