@@ -10,7 +10,6 @@ const tasksRouter = require('./routes/api/tasks');
 const reviewsRouter = require('./routes/api/reviews');
 const statistics = require('./routes/api/statistics');
 
-
 const app = express();
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';

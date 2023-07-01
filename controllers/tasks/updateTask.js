@@ -9,7 +9,7 @@ const updateTask = async (req, res) => {
   if (!result) {
     throw HttpError(404, `Task id: ${taskId} not found`);
   }
-  res.json(result);
+  res.json({ message: 'Task updated', task: result });
 };
 
 module.exports = {

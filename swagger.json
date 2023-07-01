@@ -321,9 +321,360 @@
           }
         }
       }
+    },
+    "/api/tasks": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "Get all tasks",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTasks200"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "post": {
+        "tags": ["Tasks"],
+        "summary": "Add new task",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Signup body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddTaskRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddTaskResponce200"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddTaskResponce400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/day": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "Get tasks for day",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "type": "string",
+            "description": "Date in format YYYY-MM-DD with leading 0",
+            "example": "2023-07-01"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTasks200"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid date parameter)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTaskForDay400"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/month": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "Get tasks for day",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "type": "string",
+            "description": "Date in format YYYY-MM-DD or YYYY-MM with leading 0",
+            "example": "2023-07-01"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTasks200"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{taskId}": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "Get task by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "taskId",
+            "required": true,
+            "type": "string",
+            "description": "Task id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTaskbyId200"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskbyId400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound404"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Tasks"],
+        "summary": "Delete task by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "taskId",
+            "required": true,
+            "type": "string",
+            "description": "Task id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteTaskbyId200"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskbyId400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound404"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Tasks"],
+        "summary": "Update by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "taskId",
+            "required": true,
+            "type": "string",
+            "description": "Task id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "requestBody": {
+          "description": "Signup body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddTaskRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateTaskbyId200"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskbyId400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized401"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound404"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
+    "defaultExpanded": true,
     "schemas": {
       "SignupRequest": {
         "type": "object",
@@ -873,6 +1224,479 @@
             "updatedAt": "2023-06-30T13:41:38.678Z"
           },
           "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OWVkYjgwYWExMjcwNTA5ZTVjZTdlOSIsImlhdCI6MTY4ODEzMjUzNSwiZXhwIjoxNjg4MjE4OTM1fQ.iel1IUceEFWfizYVXE5Xfb0F4cVcDvdq0cW83KXlBIQ"
+        }
+      },
+      "AddTaskRequest": {
+        "type": "object",
+        "required": ["title", "start", "end", "priority", "date", "category"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Task title. Max 250 signs"
+          },
+          "start": {
+            "type": "string",
+            "description": "Task start time"
+          },
+          "end": {
+            "type": "string",
+            "description": "Task end time"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Task priority ('low', 'medium' or 'high')"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date in format YYYY-MM-DD"
+          },
+          "category": {
+            "type": "string",
+            "description": "Task category ('todo', 'in-progress' or 'done')"
+          }
+        },
+        "example": {
+          "title": "task one",
+          "start": "09:00",
+          "end": "09:30",
+          "priority": "high",
+          "date": "2023-07-02",
+          "category": "done"
+        }
+      },
+      "AddTaskResponce200": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Task title. Max 250 signs"
+          },
+          "start": {
+            "type": "string",
+            "description": "Task start time"
+          },
+          "end": {
+            "type": "string",
+            "description": "Task end time"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Task priority ('low', 'medium' or 'high')"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date in format YYYY-MM-DD"
+          },
+          "category": {
+            "type": "string",
+            "description": "Task category ('todo', 'in-progress' or 'done')"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner's user id"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Task id"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Date of creating task"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Date of updating task"
+          }
+        },
+        "example": {
+          "title": "task one",
+          "start": "09:00",
+          "end": "09:30",
+          "priority": "high",
+          "date": "2023-07-02",
+          "category": "done",
+          "owner": "649edb80aa1270509e5ce7e9",
+          "_id": "649fdbff1360fabb914acfe8",
+          "createdAt": "2023-07-01T07:55:43.895Z",
+          "updatedAt": "2023-07-01T07:55:43.895Z"
+        }
+      },
+      "AddTaskResponce400": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "example": "Title field must be a string"
+          }
+        },
+        "example": [
+          {
+            "message": "Missing required start field"
+          },
+          {
+            "message": "End field must be a string"
+          },
+          {
+            "message": "Date field should be in format \"YYYY-MM-DD\""
+          },
+          {
+            "message": "Nonexistent date"
+          }
+        ]
+      },
+      "GetTasks200": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Task id"
+            },
+            "title": {
+              "type": "string",
+              "description": "Task title. Max 250 signs"
+            },
+            "start": {
+              "type": "string",
+              "description": "Task start time"
+            },
+            "end": {
+              "type": "string",
+              "description": "Task end time"
+            },
+            "priority": {
+              "type": "string",
+              "description": "Task priority ('low', 'medium' or 'high')"
+            },
+            "date": {
+              "type": "string",
+              "description": "Date in format YYYY-MM-DD"
+            },
+            "category": {
+              "type": "string",
+              "description": "Task category ('todo', 'in-progress' or 'done')"
+            },
+            "owner": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Owner's id"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Owner's name"
+                }
+              }
+            }
+          },
+          "example": {
+            "_id": "649fff118cdd7319e68ab0d7",
+            "title": "write auth documentation",
+            "start": "09:00",
+            "end": "12:30",
+            "priority": "high",
+            "date": "2023-07-01",
+            "category": "todo",
+            "owner": {
+              "_id": "649edb80aa1270509e5ce7e9",
+              "name": "Oleksandr"
+            }
+          }
+        },
+        "example": [
+          {
+            "_id": "649fff118cdd7319e68ab0d7",
+            "title": "write auth documentation",
+            "start": "09:00",
+            "end": "12:30",
+            "priority": "high",
+            "date": "2023-07-01",
+            "category": "todo",
+            "owner": {
+              "_id": "649edb80aa1270509e5ce7e9",
+              "name": "Oleksandr"
+            }
+          },
+          {
+            "_id": "649fff2a8cdd7319e68ab0da",
+            "title": "write tasks documentation",
+            "start": "13:00",
+            "end": "16:30",
+            "priority": "high",
+            "date": "2023-07-01",
+            "category": "todo",
+            "owner": {
+              "_id": "649edb80aa1270509e5ce7e9",
+              "name": "Oleksandr"
+            }
+          }
+        ]
+      },
+      "GetTaskForDay400": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response"
+          }
+        },
+        "example": [
+          {
+            "message": "Nonexistent date"
+          },
+          {
+            "message": "Date field should be in format \"YYYY-MM-DD\""
+          }
+        ]
+      },
+      "GetTaskbyId200": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Task id"
+          },
+          "title": {
+            "type": "string",
+            "description": "Task title. Max 250 signs"
+          },
+          "start": {
+            "type": "string",
+            "description": "Task start time"
+          },
+          "end": {
+            "type": "string",
+            "description": "Task end time"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Task priority ('low', 'medium' or 'high')"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date in format YYYY-MM-DD"
+          },
+          "category": {
+            "type": "string",
+            "description": "Task category ('todo', 'in-progress' or 'done')"
+          },
+          "owner": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Owner's id"
+              },
+              "name": {
+                "type": "string",
+                "description": "Owner's name"
+              }
+            }
+          }
+        },
+        "example": {
+          "_id": "649ffc9b9007639074f63cee",
+          "title": "task one",
+          "start": "09:00",
+          "end": "09:30",
+          "priority": "high",
+          "date": "2023-02-28",
+          "category": "done",
+          "owner": {
+            "_id": "649edb80aa1270509e5ce7e9",
+            "name": "Oleksandr"
+          }
+        }
+      },
+      "TaskbyId400": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message"
+          }
+        },
+        "example": {
+          "message": "649ffc9b9007639074f63 is not valid id"
+        }
+      },
+      "NotFound404": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message"
+          }
+        },
+        "example": {
+          "message": "Task id: 649ffc9b9007639074f63 not found"
+        }
+      },
+      "DeleteTaskbyId200": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message"
+          },
+          "task": {
+            "type": "object",
+
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Task id"
+              },
+              "title": {
+                "type": "string",
+                "description": "Task title. Max 250 signs"
+              },
+              "start": {
+                "type": "string",
+                "description": "Task start time"
+              },
+              "end": {
+                "type": "string",
+                "description": "Task end time"
+              },
+              "priority": {
+                "type": "string",
+                "description": "Task priority ('low', 'medium' or 'high')"
+              },
+              "date": {
+                "type": "string",
+                "description": "Date in format YYYY-MM-DD"
+              },
+              "category": {
+                "type": "string",
+                "description": "Task category ('todo', 'in-progress' or 'done')"
+              },
+              "owner": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Owner's id"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Owner's name"
+                  }
+                }
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "Date of creating task"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "Date of updating task"
+              }
+            }
+          }
+        },
+        "example": {
+          "message": "Task deleted",
+          "deletedTask": {
+            "_id": "649fdb051360fabb914acfe2",
+            "title": "task one",
+            "start": "09:00",
+            "end": "09:30",
+            "priority": "high",
+            "date": "2023-06-06",
+            "category": "done",
+            "owner": {
+              "_id": "649edb80aa1270509e5ce7e9",
+              "name": "Oleksandr"
+            },
+            "createdAt": "2023-07-01T07:51:33.853Z",
+            "updatedAt": "2023-07-01T07:51:33.853Z"
+          }
+        }
+      },
+      "UpdateTaskbyId200": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message"
+          },
+          "task": {
+            "type": "object",
+
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Task id"
+              },
+              "title": {
+                "type": "string",
+                "description": "Task title. Max 250 signs"
+              },
+              "start": {
+                "type": "string",
+                "description": "Task start time"
+              },
+              "end": {
+                "type": "string",
+                "description": "Task end time"
+              },
+              "priority": {
+                "type": "string",
+                "description": "Task priority ('low', 'medium' or 'high')"
+              },
+              "date": {
+                "type": "string",
+                "description": "Date in format YYYY-MM-DD"
+              },
+              "category": {
+                "type": "string",
+                "description": "Task category ('todo', 'in-progress' or 'done')"
+              },
+              "owner": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Owner's id"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Owner's name"
+                  }
+                }
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "Date of creating task"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "Date of updating task"
+              }
+            }
+          }
+        },
+        "example": {
+          "message": "Task updated",
+          "task": {
+            "_id": "649fdb071360fabb914acfe5",
+            "title": "write tasks documentation",
+            "start": "13:00",
+            "end": "16:30",
+            "priority": "high",
+            "date": "2023-07-01",
+            "category": "todo",
+            "owner": {
+              "_id": "649edb80aa1270509e5ce7e9",
+              "name": "Oleksandr"
+            },
+            "createdAt": "2023-07-01T07:51:35.532Z",
+            "updatedAt": "2023-07-01T14:10:56.085Z"
+          }
         }
       }
     },

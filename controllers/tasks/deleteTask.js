@@ -3,11 +3,12 @@ const { ctrlWrapper, HttpError } = require('../../helpers');
 
 const deleteTask = async (req, res) => {
   const { taskId } = req.params;
-  const result = await Task.findByIdAndDelete(taskId).populate('owner', 'name');
+  const { _id: owner } = req.user;
+  const result = await Task.findOneAndDelete({ _id: taskId, owner }).populate('owner', 'name');
   if (!result) {
     throw HttpError(404, `Task id: ${taskId} not found`);
   }
-  res.json({ message: 'Task deleted', result });
+  res.json({ message: 'Task deleted', task: result });
 };
 
 module.exports = {
