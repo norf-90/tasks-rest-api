@@ -11,8 +11,6 @@ const countStatistics = tasks => {
         case 'done':
           reducer.increaseDone(array);
           break;
-        default:
-          console.log("Something goes wrong. Category haven't any expected values");
       }
       return reducer;
     },

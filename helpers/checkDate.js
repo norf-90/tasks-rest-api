@@ -6,7 +6,7 @@ const checkDate = date => {
   const isValidDate =
     result.getFullYear().toString() === year &&
     result.getMonth() === month - 1 &&
-    result.getDate().toString() === day;
+    result.getDate() === Number(day);
   if (!isValidDate) throw HttpError(400, 'Nonexistent date');
 };
 
