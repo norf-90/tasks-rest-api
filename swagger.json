@@ -1681,19 +1681,6 @@
                 }
               }
             }
-          },
-          "example": {
-            "_id": "649fff118cdd7319e68ab0d7",
-            "title": "write auth documentation",
-            "start": "09:00",
-            "end": "12:30",
-            "priority": "high",
-            "date": "2023-07-01",
-            "category": "todo",
-            "owner": {
-              "_id": "649edb80aa1270509e5ce7e9",
-              "name": "Oleksandr"
-            }
           }
         },
         "example": [
