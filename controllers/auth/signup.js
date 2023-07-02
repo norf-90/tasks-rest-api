@@ -35,13 +35,9 @@ const signup = async (req, res) => {
 			  Thank you for signing up! To complete your registration, please click the button below to verify your email address.
 			</p>
 			<div style="text-align: center; margin-top: 30px;">
-			  <a href="${APP_HOST}/api/auth/verify/${newUser.verificationToken}"
+				<a href="${APP_HOST}/register/${newUser.verificationToken}"
 				style="display: inline-block; padding: 12px 24px; background-color: #4caf50; color: white; text-decoration: none; border-radius: 5px;">
-				Verify Email via Back-end (Temporary)
-			  </a>
-				<a href="http://localhost:3000/final-project-frontend-goose/register/${newUser.verificationToken}"
-				style="display: inline-block; padding: 12px 24px; background-color: #4caf50; color: white; text-decoration: none; border-radius: 5px;">
-				Verify Email via Front-end (Temporary on localhost:3000)
+				Verify Email
 			  </a>
 			</div>
 			<p style="text-align: center; color: #777; margin-top: 30px;">
