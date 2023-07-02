@@ -12,8 +12,8 @@
   "consumes": ["application/json", "multipart/form-data"],
   "produces": ["application/json"],
   "servers": [
-    { "url": "https://goose-track-ity9.onrender.com" },
-    { "url": "http://localhost:3001" }
+    { "url": "https://goose-track-ity9.onrender.com", "description": "Production server" },
+    { "url": "http://localhost:3001", "description": "Development server" }
   ],
   "tags": [
     {
@@ -51,6 +51,7 @@
         "responses": {
           "200": {
             "description": "Successful operation",
+            "required": true,
             "content": {
               "application/json": {
                 "schema": {
@@ -1409,6 +1410,10 @@
           "password": {
             "type": "string",
             "description": "User's password"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "User's date of birth"
           },
           "skype": {
             "type": "string",
