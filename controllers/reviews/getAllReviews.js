@@ -11,8 +11,10 @@ const getAllReviews = async (req, res) => {
 
   const updatedReviews = await Promise.all(
     resultReviews.map(async (item) => {
+      const { owner } = item;
+
       const resultUserAvatarUrl = await User.findOne(
-        { name: item.name },
+        { _id: owner },
         "avatarURL"
       );
       if (resultUserAvatarUrl) {

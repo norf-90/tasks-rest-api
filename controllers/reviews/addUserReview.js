@@ -3,7 +3,7 @@ const { ctrlWrapper, HttpError } = require('../../helpers');
 
 const addUserReview = async (req, res) => {
   const { _id: owner } = req.user;
-  const existingReview = await Review.findOne({ name: req.user.name });
+  const existingReview = await Review.findOne({ owner: owner });
 
   if (existingReview) {
     throw HttpError(409, 'The review exists');
