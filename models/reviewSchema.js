@@ -4,10 +4,6 @@ const { handleMongooseError } = require('../helpers');
 
 const reviewSchema = new Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
     comment: {
       type: String,
       required: true,
@@ -31,14 +27,9 @@ const Review = model('review', reviewSchema);
 // ---------------JOI--------------------------
 
 const addSchema = Joi.object({
-  name: Joi.string().required().messages({
-    "any.required": "Missing required name field",
-    "string.base": "Name field should be a string",
-  }),
-
   comment: Joi.string().required().messages({
-    "any.required": "Missing required comment field",
-    "string.base": "Comment field should be a string",
+    'any.required': 'Missing required comment field',
+    'string.base': 'Comment field should be a string',
   }),
 
   rating: Joi.number().required().integer().min(1).max(5),
