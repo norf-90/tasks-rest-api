@@ -49,13 +49,13 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Successful operation",
             "required": true,
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SignupResponse200"
+                  "$ref": "#/components/schemas/SignupResponse201"
                 }
               }
             }
@@ -984,7 +984,7 @@
           }
         }
       },
-      "SignupResponse200": {
+      "SignupResponse201": {
         "type": "object",
         "properties": {
           "message": {
@@ -1003,10 +1003,6 @@
                 "type": "string",
                 "description": "User's email",
                 "format": "email"
-              },
-              "password": {
-                "type": "string",
-                "description": "User's hashed password"
               },
               "token": {
                 "type": "string",
@@ -1057,7 +1053,6 @@
           "newUser": {
             "name": "User 1",
             "email": "samoko1175@devswp.com",
-            "password": "$2b$10$BvjmeZe6r5zZf8VheH1ViuDiSWqsCFF3Uvyjj4r4N5g5UBbNrmo72",
             "token": "",
             "avatarURL": "https://avataaars.io/?accessoriesType=Wayfa...",
             "verify": false,
@@ -1210,10 +1205,6 @@
                 "description": "User's email",
                 "format": "email"
               },
-              "password": {
-                "type": "string",
-                "description": "User's hashed password"
-              },
               "avatarURL": {
                 "type": "string",
                 "description": "User's avatar URL"
@@ -1264,7 +1255,6 @@
             "_id": "649edb80aa1270509e5ce7e9",
             "name": "Oleksandr",
             "email": "todafa8464@dronetz.com",
-            "password": "$2b$10$onba/VGbS1lSoojpQODI9uI0XHjqWAAW4OAQXtVexK0V5u8tnJkjO",
             "avatarURL": "https://avataaars.io/?accessoriesType=Blank&avatarStyle ...",
             "verify": true,
             "verificationToken": null,
@@ -1328,10 +1318,6 @@
                 "description": "User's email",
                 "format": "email"
               },
-              "password": {
-                "type": "string",
-                "description": "User's hashed password"
-              },
               "avatarURL": {
                 "type": "string",
                 "description": "User's avatar URL"
@@ -1382,7 +1368,6 @@
             "_id": "649edb80aa1270509e5ce7e9",
             "name": "Oleksandr",
             "email": "todafa8464@dronetz.com",
-            "password": "$2b$10$onba/VGbS1lSoojpQODI9uI0XHjqWAAW4OAQXtVexK0V5u8tnJkjO",
             "avatarURL": "https://avataaars.io/?accessoriesType=Bla ...",
             "verify": true,
             "verificationToken": null,
@@ -1449,10 +1434,6 @@
                 "description": "User's email",
                 "format": "email"
               },
-              "password": {
-                "type": "string",
-                "description": "User's hashed password"
-              },
               "token": {
                 "type": "string",
                 "description": "User's token"
@@ -1503,7 +1484,6 @@
             "_id": "649edb80aa1270509e5ce7e9",
             "name": "Oleksandr",
             "email": "todafa8464@dronetz.com",
-            "password": "$2b$10$onba/VGbS1lSoojpQODI9uI0XHjqWAAW4OAQXtVexK0V5u8tnJkjO",
             "avatarURL": "https://avataaars.io/?accessoriesType=Blank&avatarStyle ...",
             "verify": true,
             "verificationToken": null,
