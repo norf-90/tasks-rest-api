@@ -4,6 +4,10 @@ const { handleMongooseError } = require('../helpers');
 
 const reviewSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     comment: {
       type: String,
       required: true,
