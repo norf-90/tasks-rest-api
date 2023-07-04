@@ -47,7 +47,7 @@ const signup = async (req, res) => {
   };
   await sendEmail(verifyEmail);
 
-  res.json({
+  res.status(201).json({
     message: 'User created successfully',
     newUser,
   });
