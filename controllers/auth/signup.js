@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const { HttpError, sendEmail } = require('../../helpers');
-const { User, schemas } = require('../../models/authSchema');
+const { User } = require('../../models/authSchema');
 const { ctrlWrapper } = require('../../helpers');
 const { AvatarGenerator } = require('random-avatar-generator');
 const { v4: uuidv4 } = require('uuid');
@@ -9,8 +9,6 @@ const generator = new AvatarGenerator();
 const APP_HOST = process.env.APP_HOST;
 
 const signup = async (req, res) => {
-  const { error } = schemas.userSchemaSignup.validate(req.body);
-  if (error) throw HttpError(400, error.message);
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (user) throw HttpError(409, 'Email already in use');

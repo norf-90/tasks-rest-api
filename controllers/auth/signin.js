@@ -1,12 +1,10 @@
-const { User, schemas } = require('../../models/authSchema');
+const { User } = require('../../models/authSchema');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { ctrlWrapper } = require('../../helpers');
 const { HttpError } = require('../../helpers');
 
 const signin = async (req, res) => {
-  const { error } = schemas.loginSchema.validate(req.body);
-  if (error) throw HttpError(400, error.message);
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 

@@ -96,32 +96,19 @@ const loginSchema = Joi.object({
   }),
 });
 
-const userEmailSchema = Joi.object({
-  email: Joi.string().pattern(emailRegExp).required().messages({
-    'any.required': 'Missing required email field',
-    'string.base': 'Email field must be a string',
-    'string.pattern.base':
-      'Email field may contain only latin letters, numbers, signs ("_", ".", "-"). Must contain @ and domain.',
-  }),
-});
-
 const userUpdateSchema = Joi.object({
   name: Joi.string()
     .pattern(/^[a-zA-Z0-9 ]{2,30}$/)
-    .required()
     .messages({
-      'any.required': 'Missing required name field',
       'string.base': 'Name field must be a string',
       'string.pattern.base': 'Name field may contain only latin letters, numbers and spaces',
     }),
-  email: Joi.string().pattern(emailRegExp).required().messages({
-    'any.required': 'Missing required email field',
+  email: Joi.string().pattern(emailRegExp).messages({
     'string.base': 'Email field must be a string',
     'string.pattern.base':
       'Email field may contain only latin letters, numbers, signs ("_", ".", "-"). Must contain @ and domain.',
   }),
-  password: Joi.string().min(6).required().messages({
-    'any.required': 'Missing required password field',
+  password: Joi.string().min(6).messages({
     'string.base': 'Password field must be a string',
     'string.min': `Password field should have a minimum length of 6`,
   }),
@@ -142,7 +129,6 @@ const userUpdateSchema = Joi.object({
 const schemas = {
   userSchemaSignup,
   loginSchema,
-  userEmailSchema,
   userUpdateSchema,
 };
 
