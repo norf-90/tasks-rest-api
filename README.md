@@ -12,4 +12,6 @@
 
 [Документація](https://goose-track-ity9.onrender.com/api/docs)
 
-Задеплоєно на render.com. HOST=https://goose-track-ity9.onrender.com
+Задеплоєно на render.com
+
+HOST="https://goose-track-ity9.onrender.com"
