@@ -21,7 +21,7 @@ const signin = async (req, res) => {
     expiresIn: '24h',
   });
   const newUser = await User.findByIdAndUpdate(user.id, { token });
-  const { token: prevToken, ...userInfo } = newUser._doc;
+  const { password: userPassword, token: prevToken, ...userInfo } = newUser._doc;
 
   res.json({
     message: 'Success Signed In',

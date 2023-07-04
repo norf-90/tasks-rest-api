@@ -21,6 +21,7 @@ const signup = async (req, res) => {
     avatarURL: avatar,
     verificationToken,
   });
+  const { password: pass, ...newUserInfo } = newUser;
   const verifyEmail = {
     from: process.env.UKR_NET_EMAIL,
     to: email,
@@ -49,7 +50,7 @@ const signup = async (req, res) => {
 
   res.status(201).json({
     message: 'User created successfully',
-    newUser,
+    newUser: newUserInfo._doc,
   });
 };
 
