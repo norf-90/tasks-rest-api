@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "1.0.1",
+    "version": "1.2.0",
     "title": "GooseTrack",
     "description": "Documentation for GooseTrack project",
     "license": {
@@ -370,12 +370,12 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddTaskResponce200"
+                  "$ref": "#/components/schemas/AddTaskResponce201"
                 }
               }
             }
@@ -758,7 +758,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Successful operation",
             "content": {
               "application/json": {
@@ -1534,7 +1534,7 @@
           "category": "done"
         }
       },
-      "AddTaskResponce200": {
+      "AddTaskResponce201": {
         "type": "object",
         "properties": {
           "title": {
@@ -1977,8 +1977,19 @@
               "type": "number",
               "description": "Review rating"
             },
-            "owner": { "type": "string", "description": "Owner's id" },
-            "avatarURL": { "type": "string", "description": "Owner's avatar URL" }
+            "owner": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "owner's id"
+                },
+                "avatarURL": {
+                  "type": "string",
+                  "description": "owner's avatar URL"
+                }
+              }
+            }
           }
         },
         "example": [
@@ -1987,32 +1998,40 @@
             "name": "Kateryna Hilcher",
             "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers! ",
             "rating": 4,
-            "owner": "64941248556ca8e6574c00ab",
-            "avatarURL": "http://res.cloudinary.com/dotk2lk3j/image/upload/v1688139484/649edb80aa12 ..."
+            "owner": {
+              "_id": "64941248556ca8e6574c00ac",
+              "avatarURL": "http://res.cloudinary.com/dotk2lk3j/image/upload/v1688139484/649edb80aa12 ..."
+            }
           },
           {
             "_id": "64941248556ca8e6574c00ab",
             "name": "Mykola Kapytaniuk",
             "comment": "Very cool app, everything is clear and functional. A great program for time chronology.",
             "rating": 1,
-            "owner": "64941248556ca8e6574c00ab",
-            "avatarURL": "http://res.cloudinary.com/dotk2lk3j/image/upload/v1688139484/649edb80aa12 ..."
+            "owner": {
+              "_id": "649edb80aa1270509e5ce7e9",
+              "avatarURL": "http://res.cloudinary.com/dotk2lk3j/image/upload/v1688139484/649edb80aa12 ..."
+            }
           },
           {
             "_id": "64941248556ca8e6574c00ac",
             "name": "Ihor Dronenko",
             "comment": "Really helps to increase productivity. The application has a clear interface and useful features. I like it at the initial stage. ",
             "rating": 3,
-            "owner": "64941248556ca8e6574c00ab",
-            "avatarURL": "http://res.cloudinary.com/dotk2lk3j/image/upload/v1688139484/649edb80aa12 ..."
+            "owner": {
+              "_id": "64941248556ca8e6574c00aa",
+              "avatarURL": "http://res.cloudinary.com/dotk2lk3j/image/upload/v1688139484/649edb80aa12 ..."
+            }
           },
           {
             "_id": "64941248556ca8e6574c00ad",
             "name": "Volodymyr Shvets",
             "comment": "A good, visual time planning program.",
             "rating": 5,
-            "owner": "64941248556ca8e6574c00ab",
-            "avatarURL": "http://res.cloudinary.com/dotk2lk3j/image/upload/v1688139484/649edb80aa12 ..."
+            "owner": {
+              "_id": "64941248556ca8e6574c00ab",
+              "avatarURL": "http://res.cloudinary.com/dotk2lk3j/image/upload/v1688139484/649edb80aa12 ..."
+            }
           }
         ]
       },
@@ -2020,10 +2039,6 @@
         "type": "object",
         "required": ["name", "comment", "rating"],
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "Review owner's name"
-          },
           "comment": {
             "type": "comment",
             "description": "Content"
@@ -2034,7 +2049,6 @@
           }
         },
         "example": {
-          "name": "John Dou",
           "comment": "It's a wonderfull app.",
           "rating": 5
         }
