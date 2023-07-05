@@ -24,10 +24,12 @@ const updateUserInfo = async (req, res) => {
     });
     user.avatarURL = result.url;
   }
-  await user.save();
+  await user.save('-passord');
+  const { password: pass, ...userInfo } = user._doc;
+
   res.json({
     message: 'Success changed',
-    user,
+    user: userInfo,
   });
 };
 
