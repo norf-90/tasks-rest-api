@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { HttpError, sendEmail } = require('../../helpers');
+const { HttpError, sendEmailViaNodemailer } = require('../../helpers');
 const { User } = require('../../models/authSchema');
 const { ctrlWrapper } = require('../../helpers');
 const { AvatarGenerator } = require('random-avatar-generator');
@@ -46,7 +46,8 @@ const signup = async (req, res) => {
 		</div>
 	  `,
   };
-  await sendEmail(verifyEmail);
+  // await sendEmail(verifyEmail);
+  await sendEmailViaNodemailer(verifyEmail);
 
   res.status(201).json({
     message: 'User created successfully',

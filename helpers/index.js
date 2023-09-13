@@ -4,6 +4,7 @@ const handleMongooseError = require('./handleMongooseError');
 const sendEmail = require('./sendEmail');
 const checkDate = require('./checkDate');
 const countStatistics = require('./countStatistics');
+const sendEmailViaNodemailer = require('./sendEmailViaNodemailer');
 
 module.exports = {
   HttpError,
@@ -12,4 +13,5 @@ module.exports = {
   sendEmail,
   checkDate,
   countStatistics,
+  sendEmailViaNodemailer,
 };
